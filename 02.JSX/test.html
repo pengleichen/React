@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>02.JSX</title>
 </head>
+
 <body>
 
-<!--
+  <!--
   1. 虚拟DOM
     1). React提供了一些API来创建一种`特别`的一般JS对象
       * var element = React.createElement('h1', {id: 'myTitle'}, 'hello');
@@ -46,20 +47,30 @@
 
 -->
 
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-<div id="example1"></div>
-<div id="example2"></div>
+  <ul>
+    <li>A</li>
+    <li>B</li>
+    <li>C</li>
+  </ul>
+  <hr>
 
-<script type="text/babel">
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <div id="example"></div>
+
+  <script type="text/babel">
   //创建虚拟DOM对象
-  let ele1 = React.createElement('h2', {id: 'box1', className: 'box1'}, '使用React.createElement创建的虚拟DOM对象')
-  let ele2 = <h3>JSX创建的虚拟DOM对象</h3>
+  const names = ['Jordon', 'Kobe', 'James', 'Iversen']
   //渲染虚拟DOM对象
-  ReactDOM.render(ele1, document.querySelector('#example1'))
-  ReactDOM.render(ele2, document.querySelector('#example2'))
+  ReactDOM.render(
+    <ul>
+      { names.map(name => <li>{name}</li>) }  
+    </ul>
+    , document.querySelector('#example')
+  )
 </script>
 
 </body>
+
 </html>
