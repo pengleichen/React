@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>09.component_lifecycle-display/hide-text</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+<div id="example1"></div>
+<div id="example2"></div>
+
+<script type="text/babel">
+  /*
+  自定义组件：
+    功能描述：让指定的文档做显示/隐藏的动画
+   */
+  class AnimatedText extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        opacity: 1
+      }
+
+    }
+
+    componentDidMount() {
+      setTimeout(() => {
+        ReactDOM.unmountComponentAtNode(document.querySelector('#example'))
+      }, 60000)
+    }
+
+    render() {
+      return (
+        <div>
+          <h3 style={{opacity: this.state.opacity}} onMouseOver={this.trigger}>我非常热爱学习React！</h3>
+        </div>
+      );
+    }
+
+    trigger = () => {
+      this.timerID = setInterval(this.changeOpacity, 30)
+    }
+    changeOpacity = () => {
+      const {opacity} = this.state
+      let value = opacity > 0 ? opacity - .01 : 1
+      this.setState({
+        opacity: value
+      })
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerID)
+    }
+  }
+
+  ReactDOM.render(
+    <AnimatedText/>
+    , document.querySelector('#example')
+  )
+
+</script>
+</body>
+</html>

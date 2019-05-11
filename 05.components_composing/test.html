@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05.components_composing</title>
+</head>
+<body>
+<h2>Welcome, 张三</h2>
+<h2>Welcome, 李四</h2>
+<h2>Welcome, 王五</h2>
+<hr>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+<div id="example1"></div>
+<div id="example2"></div>
+
+<script type="text/babel">
+
+  // 创建App根组件
+  class App extends React.Component {
+    render() {
+      const {names} = this.props
+      return (
+        <div>
+          {names.map((n, index) => <Welcome key={index} name={n}/>)}
+        </div>
+      );
+    }
+  }
+
+  // 创建Welcome组件
+  function Welcome({name}) {// 声明式依赖注入
+    // console.log(this) // 工厂函数this指向的是undefined
+    return <h2>Welcome, {name}</h2>
+  }
+
+  const names = ['jardon', 'kobe', 'wade']
+  // 渲染组件
+  ReactDOM.render(
+    <App names={names}/>
+    , document.querySelector('#example')
+  )
+</script>
+</body>
+</html>

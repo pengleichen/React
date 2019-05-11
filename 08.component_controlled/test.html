@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>08.component_controlled</title>
+</head>
+<body>
+<input type="text" value="react">
+<p>react</p>
+<hr>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+<div id="example1"></div>
+<div id="example2"></div>
+
+<script type="text/babel">
+  /*
+  受控组件
+    1). React是一个单向数据流
+    2). 但可以自定义双向数据流组件（受控组件）
+   */
+  /*
+  功能：自定义组件，功能如下：
+    1). 界面如页面所示
+    2). 初始数据显示为react
+    3). 输入数据时，下面的数据同步变化
+   */
+  class TwoWay extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        value: 'react'
+      }
+    }
+
+    render() {
+      const {value} = this.state
+      return (
+        <div>
+          <input onInput={this.changeValue} defaultValue={value}/>
+          <p>{value}</p>
+        </div>
+      );
+    }
+
+    changeValue = e => {
+      const value = e.target.value
+      this.setState({
+        value
+      })
+    }
+  }
+
+  ReactDOM.render(
+    <TwoWay/>
+    , document.querySelector('#example')
+  )
+
+</script>
+</body>
+</html>

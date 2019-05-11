@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>07.component_state-todoList</title>
+</head>
+<body>
+
+<h1>Simple TODO List</h1>
+<input type="text">
+<button>Add #4</button>
+<ul>
+  <li>吃饭</li>
+  <li>睡觉</li>
+  <li>打豆豆</li>
+</ul>
+<hr>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+
+<script type="text/babel">
+  // 创建App组件
+  class App extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        todos: this.props.todos
+      }
+    }
+
+    render() {
+      let {todos} = this.state
+      return (
+        <div>
+          <h1>Simple TODO List</h1>
+          <AddTodo add={this.addTodo} length={todos.length}/>
+          <TodoList list={todos}/>
+        </div>
+      );
+    }
+
+    addTodo = (item) => {
+      let {todos} = this.state
+      if (todos.indexOf(item) === -1) {
+        todos.push(item)
+        this.setState({
+          todos
+        })
+        return true
+      }
+      alert(`${item} 已经有了`)
+      return false
+    }
+  }
+
+  // 创建子组件AddTodo
+  class AddTodo extends React.Component {
+    constructor(props) {
+      super(props)
+      this.todoRef = React.createRef()
+    }
+
+    render() {
+      let {length} = this.props
+      return (
+        <div>
+          <input ref={this.todoRef}/>
+          <button onClick={this.addTodo}>Add #{length}</button>
+        </div>
+      );
+    }
+
+    addTodo = () => {
+      const value = this.todoRef.current.value
+      const todo = value.trim()
+      const add = todo && this.props.add(todo)
+      add && (this.todoRef.current.value = '')
+    }
+  }
+
+  // 创建子组件TodoList
+  class TodoList extends React.Component {
+    constructor(props) {
+      super(props)
+    }
+
+    render() {
+      let {list} = this.props
+      return (
+        <div>
+          <ul>
+            {list.map((item, index) => <li key={index}>{item}</li>)}
+          </ul>
+        </div>
+      );
+    }
+  }
+
+  // 渲染组件
+  let todos = ['吃饭', '睡觉', '打豆豆', '学习']
+  ReactDOM.render(
+    <App todos={todos}/>
+    , document.querySelector('#example')
+  )
+</script>
+</body>
+</html>
