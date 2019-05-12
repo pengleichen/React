@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>09.component_lifecycle-虚拟DOM diff算法</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+<div id="example1"></div>
+<div id="example2"></div>
+
+<script type="text/babel">
+  /*
+  验证：
+    虚拟DOM + Diff算法：最小化页面重绘
+   */
+  class Timer extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        date: new Date()
+      };
+    }
+
+    componentDidMount() {
+      this.timerID = setInterval(this.tick, 1000)
+    }
+
+    tick = () => {
+
+      this.setState({
+        date: new Date()
+      });
+    }
+
+    render() {
+      let {date} = this.state
+      return (
+        <div>
+          Hello, <input placeholder="Your name here"/>
+          <h1>{date.toLocaleString()}</h1>
+        </div>
+      );
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerID)
+    }
+
+  }
+
+  ReactDOM.render(
+    <Timer />
+    , document.querySelector('#example')
+  )
+
+</script>
+</body>
+</html>
