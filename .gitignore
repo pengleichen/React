@@ -87,6 +87,6 @@ target/
 *.project
 *.class
 
-# CVS
+# VCS
 .git
 .svn
