@@ -1,5 +1,5 @@
-#webpack构建react应用入门
-##1. 下载相关模块包
+<h1>webpack构建react应用入门</h1>
+<h2>1. 下载相关模块包</h2>
 * 创建package.json
   ```
   yarn init
@@ -17,7 +17,7 @@
   yarn add webpack webpack-cli webpack-dev-server -D
   yarn add clean-webpack-plugin html-webpack-plugin -D
   ```
-##2. webpack配置文件：webpack.config.js
+<h2>2. webpack配置文件：webpack.config.js</h2>
   ```javascript
     const path = require('path')
     const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -43,7 +43,7 @@
       }
     }
   ```
-##3. babel配置文件：.babelrc
+<h2>3. babel配置文件：.babelrc</h2>
   ```json
   {
     "presets": [
@@ -52,7 +52,7 @@
     ]
   }
   ```
-##4. 编码
+<h2>4. 编码</h2>
   * src/js/App.js: 应用组件
   ```javascript
     import React, {Component} from 'react'
@@ -91,7 +91,7 @@
       , document.querySelector('#app')
     )
   ```
-##5. 下载 loader
+<h2>5. 下载 loader</h2>
   ```
     yarn add style-loader css-loader babel-loader -D
   ```
@@ -117,7 +117,7 @@
       ]
     }
   ```
-##6. 配置webpack-dev-server
+<h2>6. 配置webpack-dev-server</h2>
   ```
     devServer: {
       contentBase: resolve('dist'),
@@ -125,18 +125,18 @@
       hot: true
     }
   ```
-##7. 在package.json中添加编译/运行脚本
+<h2>7. 在package.json中添加编译/运行脚本</h2>
   ```json
     "scripts": {
       "build": "webpack",
       "start": "webpack-dev-server --open"
     }
   ```
-##8. 执行运行命令，运行项目
+<h2>8. 执行运行命令，运行项目</h2>
   ```
     yarn start
   ```  
-##PS: 完整的webpack.config.js文件：
+<h2>PS: 完整的webpack.config.js文件</h2>
 ```javascript
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
