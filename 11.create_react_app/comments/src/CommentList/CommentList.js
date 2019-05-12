@@ -4,6 +4,7 @@ import CommentItem from '../CommentItem/CommentItem'
 class CommentList extends Component {
   render() {
     let {comments} = this.props
+    let display = comments.length ? 'none' : ''
     return (
       <div>
         <div className="card">
@@ -12,7 +13,7 @@ class CommentList extends Component {
           </div>
           <div className="card-body">
               <div className="alert alert-danger" role="alert"
-                   style={{display: comments.length ? 'none' : ''}}>
+                   style={{display}}>
                 目前无任何评论！
               </div>
             {

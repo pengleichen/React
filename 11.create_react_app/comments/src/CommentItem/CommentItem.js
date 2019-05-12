@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+import PubSub from 'pubsub-js'
+
 import './CommentItem.css'
 class CommentItem extends Component {
   render() {
@@ -18,7 +20,11 @@ class CommentItem extends Component {
     const {comment} = this.props
     let confirm = window.confirm(`你确认要删除 ${comment.author} 的评论吗？`)
     if (confirm) {
-      this.props.remove(comment.id)
+      // 使用props
+      // this.props.remove(comment.id)
+      // 使用PubSub
+      // 发布消息
+      PubSub.publish('removeComment', comment.id)
     }
   }
 }

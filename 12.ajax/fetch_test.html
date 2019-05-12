@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>12.ajax-fetch</title>
+</head>
+<body>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://cdn.bootcss.com/fetch/2.0.4/fetch.js"></script>
+<div id="example"></div>
+<script type="text/babel">
+  /*
+  1. React没有Ajax模块
+    * 集成其他的JS库（如jQuery/fetch/axios)，发送Ajax请求
+  2. 使用axios
+    * https://github.com/axios/axios
+  3. 使用fetch
+    * https://github.com/github/fetch
+  4. 测试URL:
+    * https://api.github.com/users/pengleichen
+   */
+
+  class FetchTest extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        reposUrl: ''
+      }
+    }
+
+    render() {
+      let {reposUrl} = this.state
+      return (
+        <div>
+          {
+            !reposUrl ? <h4>Loading...</h4> :
+              <p>kevin's repository is <a target="_blank" href={reposUrl}>here</a></p>
+          }
+        </div>
+      )
+    }
+
+    componentWillMount() {
+      fetch('https://api.github.com/users/pengleichen')
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            reposUrl: data.repos_url
+          })
+        })
+        .catch(err => console.log(err.toString()))
+    }
+
+  }
+
+  ReactDOM.render(
+    <FetchTest/>
+    , document.querySelector('#example')
+  )
+
+</script>
+</body>
+</html>

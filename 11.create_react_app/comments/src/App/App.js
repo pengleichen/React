@@ -1,5 +1,7 @@
 import React from 'react'
 
+import PubSub from 'pubsub-js'
+
 import {maxBy} from 'lodash/math'
 import {remove} from 'lodash/array'
 import AddComment from '../AddComment/AddComment'
@@ -17,6 +19,12 @@ class App extends React.Component {
       comments: data.Comments.get()
     }
   }
+
+  // 组件将要被渲染的时候进行订阅
+  componentWillMount() {
+    PubSub.subscribe('removeComment', (msg, id) => this.removeComment(id))
+  }
+
   render() {
     const {comments} = this.state
     return (
@@ -33,16 +41,23 @@ class App extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-4">
-              <AddComment add={this.addComment} />
+              <AddComment add={this.addComment}/>
             </div>
             <div className="col-md-8">
-              <CommentList comments={comments} remove={this.removeComment} />
+              {
+                // 使用props
+                // <CommentList comments={comments} remove={this.removeComment}/>
+
+                // 使用PubSub
+                <CommentList comments={comments}/>
+              }
             </div>
           </div>
         </div>
       </div>
     )
   }
+
   addComment = (comment) => {
     let {comments} = this.state
     comment.id = ((maxBy(comments, (o) => o.id) || {}).id || 0) + 1
