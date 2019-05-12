@@ -1,3 +1,11 @@
 .comment-item {
-  border-bottom: 1px solid rgba(0,0,0,.125);
+  position: relative;
+  padding: 5px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.125);
+}
+
+.comment-item > .btn{
+  position: absolute;
+  bottom: 5px;
+  right: 0;
 }

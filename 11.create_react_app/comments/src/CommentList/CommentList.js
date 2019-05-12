@@ -11,7 +11,7 @@ class CommentList extends Component {
             评论回复
           </div>
           <div className="card-body">
-            {comments.map(item => <CommentItem key={item.id} comment={item}/>)}
+            {comments.map(item => <CommentItem key={item.id} comment={item} remove={this.props.remove}/>)}
           </div>
         </div>
       </div>

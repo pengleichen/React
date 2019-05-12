@@ -1,10 +1,4 @@
-class Comment {
-  constructor({id, author, content}) {
-    this.id = id
-    this.author = author
-    this.content = content
-  }
-}
+import Comment from './Comment'
 
 const INIT_COMMENTS = [
   new Comment({id: 1, author: 'Jack', content: 'React is very good!'}),
@@ -12,6 +6,7 @@ const INIT_COMMENTS = [
 ]
 export default {
   Comments: {
-    get: () => localStorage.getItem('comments') || INIT_COMMENTS
+    get: () => JSON.parse(localStorage.getItem('comments')) || INIT_COMMENTS,
+    set: (comments) => localStorage.setItem('comments', JSON.stringify(comments))
   }
 }
