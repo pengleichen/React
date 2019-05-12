@@ -2,10 +2,10 @@ import React from 'react'
 
 import {maxBy} from 'lodash/math'
 import {remove} from 'lodash/array'
-import AddComment from './AddComment/AddComment'
-import CommentList from './CommentList/CommentList'
+import AddComment from '../AddComment/AddComment'
+import CommentList from '../CommentList/CommentList'
 
-import data from './Data'
+import data from '../Data'
 
 import './App.css';
 
@@ -45,7 +45,7 @@ class App extends React.Component {
   }
   addComment = (comment) => {
     let {comments} = this.state
-    comment.id = maxBy(comments, (o) => o.id).id + 1
+    comment.id = ((maxBy(comments, (o) => o.id) || {}).id || 0) + 1
     comments.unshift(comment)
     this.setState({
       comments

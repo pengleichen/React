@@ -11,7 +11,13 @@ class CommentList extends Component {
             评论回复
           </div>
           <div className="card-body">
-            {comments.map(item => <CommentItem key={item.id} comment={item} remove={this.props.remove}/>)}
+              <div className="alert alert-danger" role="alert"
+                   style={{display: comments.length ? 'none' : ''}}>
+                目前无任何评论！
+              </div>
+            {
+              comments.map(item => <CommentItem key={item.id} comment={item} remove={this.props.remove}/>)
+            }
           </div>
         </div>
       </div>
