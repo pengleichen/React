@@ -13,3 +13,14 @@ code {
 }
 
 @import "~bootstrap/dist/css/bootstrap.css";
+
+html, body {
+  height: 100%;
+  /*overflow: hidden;*/
+}
+html {
+  overflow: hidden;
+}
+body {
+  overflow: auto;
+}

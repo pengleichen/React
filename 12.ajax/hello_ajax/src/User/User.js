@@ -5,7 +5,7 @@ class User extends Component {
     let {name, homeUrl, avatarUrl} = this.props
     return (
       <div className="col-md-2">
-        <a href={homeUrl} target="_blank">
+        <a href={homeUrl} target="_blank" rel="noopener noreferrer">
           <div className="card text-center">
             <img src={avatarUrl} className="card-img-top" width="100%" alt="..."/>
             <div className="card-body" style={{padding: 0}}>

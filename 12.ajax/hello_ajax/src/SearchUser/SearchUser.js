@@ -15,7 +15,7 @@ class SearchUser extends Component {
     let display = this.state.display ? '' : 'none'
     return (
       <div>
-        <div className="jumbotron">
+        <header className="jumbotron">
           <h1>Search Github Users</h1>
           <div className="row">
             <div className="col-md-4">
@@ -23,7 +23,7 @@ class SearchUser extends Component {
             </div>
             <button type="button" className="btn btn-primary" disabled={search} onClick={this.search}>Search</button>
           </div>
-        </div>
+        </header>
 
         <p style={{display}}>Enter name to search</p>
       </div>
