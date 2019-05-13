@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<div id="example"></div>
+<script type="text/babel">
+  const INIT_PERSONS = [
+    {id: 1, name: 'Tom', age: 23},
+    {id: 2, name: 'Jack', age: 25}
+  ]
+
+  function ListItem({id, name, age}) {
+    return (<li style={{padding: '5px'}}>{id}--{name}--{age}--<input/></li>)
+  }
+
+  class PersonList extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        persons: props.persons
+      }
+    }
+
+    render() {
+      const {persons} = this.state
+      const listItemsWithId = persons.map(p => <ListItem key={p.id} {...p}/>)
+      const listItemsWithIndex = persons.map((p, i) => <ListItem key={i} {...p}/>)
+      return (
+        <div>
+          <h2>使用id作为key</h2>
+          <ul>
+            {listItemsWithId}
+          </ul>
+          <h2>使用index作为key</h2>
+          <ul>
+            {listItemsWithIndex}
+          </ul>
+          <button onClick={this.update}>添加一个Person</button>
+        </div>
+      )
+    }
+    update = () => {
+      const {persons} = this.state
+      persons.unshift({id: 3, name: 'Jerry', age: 19})
+      this.setState({
+        persons
+      })
+    }
+  }
+
+  ReactDOM.render(
+    <PersonList persons={INIT_PERSONS}/>
+    , document.querySelector('#example')
+  )
+
+</script>
+</body>
+</html>
