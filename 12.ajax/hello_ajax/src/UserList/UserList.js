@@ -3,8 +3,6 @@ import Axios from 'axios'
 import { chunk } from 'lodash/array'
 import User from '../User/User'
 
-import './UserList.css'
-
 class UserList extends Component {
   constructor(props) {
     super(props)
