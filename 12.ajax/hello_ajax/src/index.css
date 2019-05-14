@@ -19,3 +19,7 @@ code {
   left: 50%;
   transform: translate(-50%);
 }
+
+.card-title {
+  margin: 0.75rem 0;
+}
