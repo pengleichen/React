@@ -1,31 +1,29 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Axios from 'axios'
-import {chunk} from 'lodash/array'
+import { chunk } from 'lodash/array'
 import User from '../User/User'
-
-import './UserList.css'
 
 class UserList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollHeight: 0,
       loading: false,
       error: null,
       users: null,
       hasMore: true,
       page: 1
     }
+
+    window.onscroll = this.loadMore
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    console.log(nextProps)
+  componentWillReceiveProps(nextProps) {
     this.setState({
       loading: true,
       page: 1,
-      keyword: nextProps.keyword
+      users: null
     })
-    let {keyword} = nextProps
+    let { keyword } = nextProps
     this.fetch(keyword, 1)
   }
 
@@ -33,24 +31,29 @@ class UserList extends Component {
     Axios.get(`https://api.github.com/search/users?q=${keyword}&page=${page}`, {
       transformResponse(data) {
         data = JSON.parse(data)
-        return data.items.map(item => {
-          return {
-            id: item.id,
-            name: item.login,
-            avatarUrl: item.avatar_url,
-            homeUrl: item.html_url
-          }
-        })
+        return {
+          total: data.total_count,
+          items: (data.items || []).map(item => {
+            return {
+              id: item.id,
+              name: item.login,
+              avatarUrl: item.avatar_url,
+              homeUrl: item.html_url
+            }
+          })
+        }
       }
     })
       .then(res => {
-        let {users} = this.state
-        users = users || []
-        users.push(...res.data)
+        const { total, items } = res.data
+        const users = [
+          ...(this.state.users || []),
+          ...items
+        ]
         this.setState({
           loading: false,
           users,
-          hasMore: res.data.length
+          hasMore: (total > users.length)
         })
       })
       .catch(error => {
@@ -62,7 +65,7 @@ class UserList extends Component {
   }
 
   render() {
-    let {loading, error, users, scrollHeight} = this.state
+    let { loading, error, users } = this.state
     if (loading) {
       return (
         <h3>Loading ...</h3>
@@ -76,26 +79,36 @@ class UserList extends Component {
     }
     let rows = chunk(users, 6)
     return (
-      <div className="user-list">
+      <div>
         {rows.map((row, index) => (
           <div key={index} className="row mb-md-4">
-            {row.map(user => <User key={user.id} {...user}/>)}
+            {row.map(user => <User key={user.id} {...user} />)}
           </div>
         ))}
       </div>
-
     )
-  }
-  componentDidMount() {
   }
 
   loadMore = () => {
-    let {keyword, hasMore, page} = this.state
-    if (!hasMore) {
-      return
-    }
-    if(this.scrollDom.scrollTop + this.scrollDom.clientHeight >= this.scrollDom.scrollHeight){
-      this.fetch(keyword, ++page)
+    const {
+      state: {
+        error,
+        loading,
+        hasMore,
+        page
+      },
+      props: {
+        keyword
+      }
+    } = this
+    if (error || loading || !hasMore) return
+    if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+      console.log('loading more ...')
+      let nextPage = page + 1
+      this.setState({
+        page: nextPage
+      })
+      this.fetch(keyword, nextPage)
     }
   }
 }

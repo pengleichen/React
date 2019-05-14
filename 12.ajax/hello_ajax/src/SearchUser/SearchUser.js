@@ -19,7 +19,7 @@ class SearchUser extends Component {
           <h1>Search Github Users</h1>
           <div className="row">
             <div className="col-md-4">
-              <input type="text" className="form-control" onInput={this.input} ref={this.searchInputRef}/>
+              <input type="text" className="form-control" onKeyUpCapture={this.enter} onInput={this.input} ref={this.searchInputRef}/>
             </div>
             <button type="button" className="btn btn-primary" disabled={search} onClick={this.search}>Search</button>
           </div>
@@ -42,6 +42,9 @@ class SearchUser extends Component {
         search: true
       })
     }
+  }
+  enter = (e) => {
+    e.keyCode === 13 && this.search()
   }
   search = () => {
     this.props.search(this.searchInputRef.current.value)
