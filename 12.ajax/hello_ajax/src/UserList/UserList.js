@@ -3,10 +3,13 @@ import Axios from 'axios'
 import { chunk } from 'lodash/array'
 import User from '../User/User'
 
+import './UserList.css'
+
 class UserList extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      firstView: false,
       loading: false,
       error: null,
       users: null,
@@ -19,7 +22,7 @@ class UserList extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      loading: true,
+      firstView: true,
       page: 1,
       users: null
     })
@@ -28,6 +31,9 @@ class UserList extends Component {
   }
 
   fetch(keyword, page) {
+    this.setState({
+      loading: true
+    })
     Axios.get(`https://api.github.com/search/users?q=${keyword}&page=${page}`, {
       transformResponse(data) {
         data = JSON.parse(data)
@@ -50,6 +56,11 @@ class UserList extends Component {
           ...(this.state.users || []),
           ...items
         ]
+        if (page === 1) {
+          this.setState({
+            firstView: false
+          })
+        }
         this.setState({
           loading: false,
           users,
@@ -57,6 +68,11 @@ class UserList extends Component {
         })
       })
       .catch(error => {
+        if (page === 1) {
+          this.setState({
+            firstView: false
+          })
+        }
         this.setState({
           loading: false,
           error
@@ -65,8 +81,9 @@ class UserList extends Component {
   }
 
   render() {
-    let { loading, error, users } = this.state
-    if (loading) {
+    let { firstView, loading, error, users } = this.state
+    let display = loading ? '' : 'none'
+    if (firstView) {
       return (
         <h3>Loading ...</h3>
       )
@@ -85,6 +102,11 @@ class UserList extends Component {
             {row.map(user => <User key={user.id} {...user} />)}
           </div>
         ))}
+        <div style={{display}} className="loading-bar">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
       </div>
     )
   }
