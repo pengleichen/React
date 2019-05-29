@@ -24,6 +24,7 @@ const {UserModel} = require('../db/models')
 const md5 = require('blueimp-md5')
 // 注册路由
 router.post('/register', (req, res) => {
+  console.log(`register ... ${req.body}`)
   const {username, password, type} = req.body
   // 判断用户是否存在，如果存在，返回提示错误信息
   UserModel.findOne({username}, (error, user) => {
@@ -41,6 +42,7 @@ router.post('/register', (req, res) => {
 })
 // 登录路由
 router.post('/login', (req, res) => {
+  console.log(`login ... ${req.body}`)
   const {username, password} = req.body
   UserModel.findOne({username, password: md5(password)}, (error, user) => {
     if (user) {

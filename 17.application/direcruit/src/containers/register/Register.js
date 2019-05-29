@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import axios from 'axios'
 import {
   NavBar,
   WingBlank,
@@ -23,6 +23,11 @@ class Register extends Component {
 
   register = () => {
     console.log(this.state)
+    axios.defaults.baseURL = 'http://localhost:3005/api/v1'
+    axios.post('/register', this.state)
+      .then(res => {
+        console.log(res)
+      })
   }
 
   handleChange = (name, val) => this.setState({
@@ -54,7 +59,7 @@ class Register extends Component {
               <Radio checked={type === 'laoban'} onChange={() => this.handleChange('type', 'laoban')}>老板</Radio>
             </ListItem>
             <WhiteSpace/>
-            <Button type="primary">注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册</Button>
+            <Button type="primary" onClick={this.register}>注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册</Button>
             <WhiteSpace/>
             <Button onClick={this.toLogin}>已有账户</Button>
           </List>

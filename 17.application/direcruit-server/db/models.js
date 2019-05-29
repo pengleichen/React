@@ -12,6 +12,7 @@ mongoose.connect("mongodb://localhost:27017/direcruit", {
 const conn = mongoose.connection
 conn.on('connected', () => console.log('DB connected successfully!'))
 
+/* user schema */
 const userSchema = mongoose.Schema({
   username: {type: String, required: true}, // 用户名
   password: {type: String, required: true}, // 密码
@@ -26,3 +27,5 @@ const userSchema = mongoose.Schema({
 const UserModel = mongoose.model('user', userSchema)
 
 exports.UserModel = UserModel
+
+/* user schema */
