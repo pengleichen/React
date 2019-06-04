@@ -11,6 +11,7 @@ import Register from './containers/register/Register'
 import Login from './containers/login/Login'
 import Main from './containers/main/Main'
 
+import './assets/styles/index.less'
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>

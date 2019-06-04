@@ -28,6 +28,7 @@ router.post('/register', (req, res) => {
   const {username, password, type} = req.body
   // 判断用户是否存在，如果存在，返回提示错误信息
   UserModel.findOne({username}, (error, user) => {
+    console.log(username)
     if (username === 'admin' || user) {
       res.send({code: 1, msg: '此用户已存在'})
     } else {
